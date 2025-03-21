@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phishing Simulation - Multiple Scenarios</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .container { background-color: white; border-radius: 8px; width: 60%; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+    h1 { text-align: center; }
+    .email-content { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9; border-radius: 5px; }
+    .actions { display: flex; justify-content: space-around; margin-bottom: 20px; }
+    .button { padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; }
+    .safe-button { background-color: #4CAF50; color: white; }
+    .phish-button { background-color: #f44336; color: white; }
+    .feedback { margin-top: 20px; padding: 10px; font-weight: bold; text-align: center; }
+    .score { font-size: 18px; text-align: center; }
+    .next-button { margin-top: 20px; padding: 10px 20px; background-color: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Phishing Simulation</h1>
+    <!-- Email Content -->
+    <div class="email-content" id="email-content">
+      <!-- Content will be updated dynamically by JavaScript -->
+    </div>
+
+    <!-- Actions: Player Choices -->
+    <div class="actions" id="actions">
+      <!-- Options will be updated dynamically by JavaScript -->
+    </div>
+
+    <!-- Feedback & Score -->
+    <div class="feedback" id="feedback"></div>
+    <div class="score" id="score">Score: 0</div>
+
+    <!-- Next Button -->
+    <button class="next-button" id="next-button" onclick="nextScenario()" style="display:none;">Next Scenario</button>
+  </div>
+
+  <script>
+    let score = 0;
+    let currentScenario = 0;
+
+    // Define all the scenarios
+    const scenarios = [
+      {
+        title: "Campus Announcements: Fake Event Invitations or Free Merchandise Offers",
+        content: `<p><strong>Subject:</strong> Free Merchandise Giveaway at Campus Event!</p>
+                  <p>Dear Student,</p>
+                  <p>We are offering free merchandise as part of our upcoming campus event. Simply click the link below to RSVP and claim your items!</p>
+                  <p><strong>Click here to claim your items</strong></p>`,
+        options: [
+          { text: "Report to IT", action: "safe" },
+          { text: "Click the Link", action: "phish" }
+        ],
+        feedback: {
+          safe: "Well done! Reporting this to IT is the right action. Phishing emails often promise free merchandise to lure victims.",
+          phish: "Oops! This was a phishing attempt. Never click on links in unsolicited emails, especially when offering free items."
+        }
+      },
+      {
+        title: "Job/Scholarship Offers: Fake Internship Opportunities or Scholarship Scams",
+        content: `<p><strong>Subject:</strong> Congratulations! Scholarship Opportunity Awaits You</p>
+                  <p>Dear Student,</p>
+                  <p>We are excited to offer you a scholarship for your excellent academic performance. Please download the attached PDF to claim your scholarship and provide your personal details.</p>
+                  <p><strong>Click here to download the scholarship details</strong></p>`,
+        options: [
+          { text: "Report to IT", action: "safe" },
+          { text: "Download the PDF", action: "phish" }
+        ],
+        feedback: {
+          safe: "Well done! Reporting this to IT is the right action. Phishing emails often promise scholarships or financial awards.",
+          phish: "Oops! This was a phishing attempt. Never click on links to download files, especially when offering money or scholarships."
+        }
+      },
+      // Add more scenarios in the same structure as above
+    ];
+
+    // Update the content and actions for the current scenario
+    function updateScenario() {
+      const scenario = scenarios[currentScenario];
+      document.getElementById('email-content').innerHTML = `<h3>${scenario.title}</h3>${scenario.content}`;
+      
+      const actionsElement = document.getElementById('actions');
+      actionsElement.innerHTML = '';
+      scenario.options.forEach(option => {
+        const button = document.createElement('button');
+        button.className = 'button ' + (option.action === 'safe' ? 'safe-button' : 'phish-button');
+        button.textContent = option.text;
+        button.onclick = function() { checkDecision(option.action) };
+        actionsElement.appendChild(button);
+      });
+
+      document.getElementById('next-button').style.display = 'none';  // Hide the next button until feedback is given
+    }
+
+    // Check the player's decision
+    function checkDecision(decision) {
+      const scenario = scenarios[currentScenario];
+      const feedbackElement = document.getElementById('feedback');
+
+      if (decision === 'safe') {
+        feedbackElement.textContent = scenario.feedback.safe;
+        feedbackElement.style.color = 'green';
+        score += 10;
+      } else {
+        feedbackElement.textContent = scenario.feedback.phish;
+        feedbackElement.style.color = 'red';
+        score -= 5;
+      }
+
+      document.getElementById('score').textContent = `Score: ${score}`;
+      document.getElementById('next-button').style.display = 'inline';  // Show the next button
+    }
+
+    // Move to the next scenario
+    function nextScenario() {
+      currentScenario++;
+      if (currentScenario < scenarios.length) {
+        updateScenario();
+      } else {
+        document.getElementById('email-content').innerHTML = '<h3>Congratulations! You have completed all the scenarios.</h3>';
+        document.getElementById('actions').innerHTML = '';
+        document.getElementById('next-button').style.display = 'none';
+      }
+    }
+
+    // Initialize the game
+    updateScenario();
+  </script>
+</body>
+</html>

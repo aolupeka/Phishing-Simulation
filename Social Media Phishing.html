@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phishing Simulation - Social Media Phishing</title>
+  <style>
+    /* Same styles as before, no changes needed here */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Phishing Simulation: Social Media Phishing</h1>
+
+    <!-- Email Content -->
+    <div class="email-content">
+      <p><strong>Subject:</strong> Important Update Regarding Your Facebook Account</p>
+      <p>Dear [Your Name],</p>
+      <p>We noticed unusual activity on your Facebook account. To secure your account, please click the link below to verify your identity and change your password.</p>
+      <p><strong>Click here to verify your account</strong></p>
+    </div>
+
+    <!-- Actions: Player Choices -->
+    <div class="actions">
+      <button class="button safe-button" onclick="checkDecision('safe')">Report to IT</button>
+      <button class="button phish-button" onclick="checkDecision('phish')">Click the Link</button>
+    </div>
+
+    <!-- Feedback & Score -->
+    <div class="feedback" id="feedback"></div>
+    <div class="score" id="score">Score: 0</div>
+  </div>
+
+  <script>
+    let score = 0;
+
+    function checkDecision(decision) {
+      const feedback = document.getElementById('feedback');
+      const scoreDisplay = document.getElementById('score');
+      
+      if (decision === 'safe') {
+        feedback.textContent = "Well done! Reporting this to IT is the right action. Phishing emails may impersonate social media companies to steal login details.";
+        feedback.style.color = 'green';
+        score += 10;
+      } else {
+        feedback.textContent = "Oops! This was a phishing attempt. Do not click on links claiming to be from social media companies, especially regarding account security.";
+        feedback.style.color = 'red';
+        score -= 5;
+      }
+
+      scoreDisplay.textContent = `Score: ${score}`;
+      setTimeout(resetGame, 2000);  // Reset after 2 seconds for the next round
+    }
+
+    function resetGame() {
+      // Reload to refresh the game for new scenarios
+      window.location.reload();  // You can add additional scenario logic here
+    }
+  </script>
+</body>
+</html>

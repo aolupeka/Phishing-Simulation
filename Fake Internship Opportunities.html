@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phishing Simulation - Job/Scholarship Offer</title>
+  <style>
+    /* Same styles as before, no changes needed here */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Phishing Simulation: Job/Scholarship Offer</h1>
+
+    <!-- Email Content -->
+    <div class="email-content">
+      <p><strong>Subject:</strong> Congratulations! Scholarship Opportunity Awaits You</p>
+      <p>Dear Student,</p>
+      <p>We are excited to offer you a scholarship for your excellent academic performance. Please download the attached PDF to claim your scholarship and provide your personal details.</p>
+      <p><strong>Click here to download the scholarship details</strong></p>
+    </div>
+
+    <!-- Actions: Player Choices -->
+    <div class="actions">
+      <button class="button safe-button" onclick="checkDecision('safe')">Report to IT</button>
+      <button class="button phish-button" onclick="checkDecision('phish')">Download the PDF</button>
+    </div>
+
+    <!-- Feedback & Score -->
+    <div class="feedback" id="feedback"></div>
+    <div class="score" id="score">Score: 0</div>
+  </div>
+
+  <script>
+    let score = 0;
+
+    function checkDecision(decision) {
+      const feedback = document.getElementById('feedback');
+      const scoreDisplay = document.getElementById('score');
+      
+      if (decision === 'safe') {
+        feedback.textContent = "Well done! Reporting this to IT is the right action. Phishing emails often promise scholarships or financial awards.";
+        feedback.style.color = 'green';
+        score += 10;
+      } else {
+        feedback.textContent = "Oops! This was a phishing attempt. Never click on links to download files, especially when offering money or scholarships.";
+        feedback.style.color = 'red';
+        score -= 5;
+      }
+
+      scoreDisplay.textContent = `Score: ${score}`;
+      setTimeout(resetGame, 2000);  // Reset after 2 seconds for the next round
+    }
+
+    function resetGame() {
+      // Reload to refresh the game for new scenarios
+      window.location.reload();  // You can add additional scenario logic here
+    }
+  </script>
+</body>
+</html>

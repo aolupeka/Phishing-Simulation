@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phishing Simulation - Campus Announcements</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .container { background-color: white; border-radius: 8px; width: 60%; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+    h1 { text-align: center; }
+    .email-content { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9; border-radius: 5px; }
+    .actions { display: flex; justify-content: space-around; }
+    .button { padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; }
+    .safe-button { background-color: #4CAF50; color: white; }
+    .phish-button { background-color: #f44336; color: white; }
+    .feedback { margin-top: 20px; padding: 10px; font-weight: bold; text-align: center; }
+    .score { font-size: 18px; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Phishing Simulation: Campus Announcements</h1>
+
+    <!-- Email Content -->
+    <div class="email-content">
+      <p><strong>Subject:</strong> Free Merchandise Giveaway at Campus Event!</p>
+      <p>Dear Student,</p>
+      <p>We are offering free merchandise as part of our upcoming campus event. Simply click the link below to RSVP and claim your items!</p>
+      <p><strong>Click here to claim your items</strong></p>
+    </div>
+
+    <!-- Actions: Player Choices -->
+    <div class="actions">
+      <button class="button safe-button" onclick="checkDecision('safe')">Report to IT</button>
+      <button class="button phish-button" onclick="checkDecision('phish')">Click the Link</button>
+    </div>
+
+    <!-- Feedback & Score -->
+    <div class="feedback" id="feedback"></div>
+    <div class="score" id="score">Score: 0</div>
+  </div>
+
+  <script>
+    let score = 0;
+
+    function checkDecision(decision) {
+      const feedback = document.getElementById('feedback');
+      const scoreDisplay = document.getElementById('score');
+      
+      if (decision === 'safe') {
+        feedback.textContent = "Well done! Reporting this to IT is the right action. Phishing emails often promise free merchandise to lure victims.";
+        feedback.style.color = 'green';
+        score += 10;
+      } else {
+        feedback.textContent = "Oops! This was a phishing attempt. Never click on links in unsolicited emails, especially when offering free items.";
+        feedback.style.color = 'red';
+        score -= 5;
+      }
+      
+      scoreDisplay.textContent = `Score: ${score}`;
+      setTimeout(resetGame, 2000);  // Reset after 2 seconds for the next round
+    }
+
+    function resetGame() {
+      // Reset for next round (you can add other scenarios here)
+      window.location.reload();  // Reload to refresh the game for new scenarios
+    }
+  </script>
+</body>
+</html>
